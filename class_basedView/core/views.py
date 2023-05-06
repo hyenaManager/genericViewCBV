@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView,DetailView
 from .models import Publisher,Book
 
@@ -20,3 +20,11 @@ class BookList(ListView):
     context_object_name = 'book_lists'
     queryset = Book.objects.filter(publisher__name= "lime")
     template_name = "core/book_list.html"
+
+class PublisherBookList(ListView):
+    template_name = 'core/publisherBookList.html'
+    context_object_name = 'publisher_books'
+
+    def get_queryset(self):
+        self.publisher = get_object_or_404(Publisher,name = self.kwargs['publisher'])
+        return Book.objects.get(publisher = self.publisher)
