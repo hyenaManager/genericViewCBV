@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>detail_view</h3>
+<ul>
+    {% for book in book_lists %}
+    <li>{{book.publisher}}</li>
+    <li>{{book.title}}</li>
+    <li>{{book.publication_date}}</li>
+    {% endfor %}
+    
+</ul>
+
+{% endblock content %}
