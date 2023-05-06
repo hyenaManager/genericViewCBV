@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView,DetailView
 from .models import Publisher,Book
@@ -28,3 +29,7 @@ class PublisherBookList(ListView):
     def get_queryset(self):
         self.publisher = get_object_or_404(Publisher,name = self.kwargs['publisher'])
         return Book.objects.get(publisher = self.publisher)
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["publisher"] = self.publisher
+        return context
