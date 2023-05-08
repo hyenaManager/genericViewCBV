@@ -1,6 +1,7 @@
 from django.db import models
 
 from django.db import models
+from datetime import datetime
 
 
 class Publisher(models.Model):
@@ -23,6 +24,7 @@ class Author(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()
     headshot = models.ImageField(upload_to="author_headshots")
+    last_accessed = models.DateTimeField(default=datetime.now())
 
     def __str__(self):
         return self.name
