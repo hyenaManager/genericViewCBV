@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h5>APi view</h5>
+
+{% for item in api_data %}
+<h5>{{item.title}}</h5>
+<a href="{{item.longURL}}" target="blank">Read here</a>
+{% endfor %}
+
+{% endblock content %}
