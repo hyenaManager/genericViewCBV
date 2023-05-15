@@ -1,7 +1,8 @@
 from typing import Any, Dict
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render,HttpResponse
 from django.views.generic import ListView,DetailView
 from .models import Publisher,Book
+import requests
 
 class PublisherListView(ListView):
     model = Publisher
@@ -34,3 +35,20 @@ class PublisherBookList(ListView):
         context = super().get_context_data(**kwargs)
         context["publisher"] = self.publisher
         return context
+    
+def api_check(request):
+
+    url = "https://bloomberg-market-and-financial-news.p.rapidapi.com/market/auto-complete"
+
+    querystring = {"query":"finacial"}
+
+    headers = {
+        "X-RapidAPI-Key": "cd59f31662mshca9f7cd43ea636ap1c82cdjsn91d94c188d4d",
+        "X-RapidAPI-Host": "bloomberg-market-and-financial-news.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    data = response.json()
+    context = data['news']
+    print(context) 
+    return render(request,'core/api_view.html',{"api_data":context})
